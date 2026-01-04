@@ -1,0 +1,79 @@
+
+
+Aqui estão 10 exercícios interessantes sobre herança simples em Python, projetados para praticar e entender melhor os conceitos de POO:
+
+---
+
+### **1. Criando uma hierarquia simples**
+Crie uma classe base chamada `Animal` com atributos `nome` e `idade` e um método `falar()` que imprime uma mensagem genérica.
+Crie duas classes derivadas:
+- `Cachorro` que sobrescreve `falar()` para imprimir "Au au".
+- `Gato` que sobrescreve `falar()` para imprimir "Miau".
+Teste criando instâncias das subclasses.
+
+---
+
+### **2. Adicionando métodos específicos**
+Use a hierarquia do exercício anterior.
+- Adicione um método específico `cavar()` em `Cachorro`.
+- Adicione um método específico `pular_alto()` em `Gato`.
+Teste chamar os métodos adicionais.
+
+---
+
+### **3. Construtores com super()**
+Crie uma classe base `Veiculo` com atributos `marca` e `modelo`.
+Crie uma classe derivada `Carro` que adiciona o atributo `num_portas`. Use o método `super()` para inicializar os atributos herdados.
+
+---
+
+### **4. Sobreposição parcial**
+Crie uma classe `Pessoa` com atributos `nome` e `idade`, e um método `cumprimentar()` que diz "Olá, meu nome é [nome]".
+Crie uma classe derivada `Professor` que sobrescreve `cumprimentar()` para adicionar "Eu sou professor".
+
+---
+
+### **5. Polimorfismo em ação**
+Crie uma classe base `Forma` com um método `area()` que retorna 0.
+Crie duas subclasses:
+- `Retangulo` com atributos `largura` e `altura`.
+- `Circulo` com atributo `raio`.
+Implemente o método `area()` em cada subclasse para calcular a área correta.
+
+---
+
+### **6. Chamando o método da classe base**
+Crie uma classe base `Funcionario` com um método `trabalhar()` que imprime "Trabalhando!".
+Crie uma classe derivada `Gerente` que sobrescreve o método para adicionar "Supervisionando!".
+No método sobrescrito, chame o método da classe base usando `super()`.
+
+---
+
+### **7. Encapsulamento e herança**
+Crie uma classe `ContaBancaria` com atributos privados `_saldo` e métodos `depositar()` e `sacar()`.
+Crie uma subclasse `ContaCorrente` que adiciona um limite de saque.
+
+---
+
+### **8. Inicializando listas em herança**
+Crie uma classe base `Biblioteca` com uma lista de `livros` e métodos para adicionar/remover livros.
+Crie uma subclasse `BibliotecaInfantil` que só permite adicionar livros apropriados para crianças.
+
+---
+
+### **9. Herança múltipla básica**
+Crie duas classes:
+- `ClasseA` com um método `metodo_a()`.
+- `ClasseB` com um método `metodo_b()`.
+Crie uma classe `ClasseC` que herda de ambas e possui um método que chama `metodo_a()` e `metodo_b()`.
+
+---
+
+### **10. Usando isinstance()**
+Crie uma hierarquia com classes `Animal`, `Peixe` e `Passaro`.
+- Adicione métodos exclusivos a `Peixe` e `Passaro`.
+- Crie uma função que recebe uma instância de `Animal` e verifica se é um `Peixe` ou `Passaro` usando `isinstance()`.
+
+---
+
+Esses exercícios são divertidos e abrangem conceitos como sobreposição, encapsulamento, polimorfismo, e uso de métodos especiais. 🎉
