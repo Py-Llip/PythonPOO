@@ -1,7 +1,13 @@
 """são métodos que têm dois underscores no início e no final se fala dander coisa, ex dander init
-__init__: inicializa
+__init__: inicializa os atributos.
+__new__: Personalizar a criação de um objeto Chamado antes de __init__. Usado para controle avançado de criação de instâncias.
+__del__: Executa ações ao deletar o objeto.
+__str__: transforma a classe em um str do seu desejo.
+__repr__: Representação técnica do objeto.
+__format__: Permite que você passe "instruções" (como .2f) dentro de chaves {} para formatar os atributos internos.
+__bytes__: Transforma o estado do objeto em uma sequência de bytes puramente técnica.
 __len__: facilita o tamanho do objeto (usa-se mais nas listas)
-__str__: transforma a classe em um str do seu desejo
+
 __add__: soma uma classe com a outra
 __getitem__: retorna o elemento da alista interna, ou no for n in
 __setitem__: Permite modificar itens diretamente Usado para definir itens em um objeto, como se fosse um dicionário ou lista.
@@ -11,15 +17,14 @@ __delitem__: remove a lista ou oq vc quer com o del
 __reversed__: inverte a lista
 __eq__: se colocar classe é igual a outraclasse e returna o valor da sua preferencia
 __iter__: Faz a classe iterável
-__repr__: Representação técnica do objeto
 __call__: Torna o objeto chamável, Permite que um objeto funcione como uma função.
 __contains__: Verificar se um elemento está presente, operador in
 __hash__: Torna o objeto hashable
-__del__: Executa ações ao deletar o objeto
+
 __pow__: Eleva um objeto a uma potência
 __sub__: Subtração entre objetos
 __lt__, __le__, __gt__, __ge__: Comparações entre objetos Permite usar <, <=, >, >=.
-__new__: Personalizar a criação de um objeto Chamado antes de __init__. Usado para controle avançado de criação de instâncias.
+
 __getattr__ e __setattr__: Controle de atributos dinâmicos
 """
 #__init__:
