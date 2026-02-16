@@ -6,6 +6,8 @@ __str__: transforma a classe em um str do seu desejo.
 __repr__: Representação técnica do objeto.
 __format__: Permite que você passe "instruções" (como .2f) dentro de chaves {} para formatar os atributos internos.
 __bytes__: Transforma o estado do objeto em uma sequência de bytes puramente técnica.
+
+
 __len__: facilita o tamanho do objeto (usa-se mais nas listas)
 
 __add__: soma uma classe com a outra
@@ -35,16 +37,33 @@ class Pessoa:
 
 p = Pessoa("Fellipe", 15)
 print(p.nome, p.idade)  # Saída: Fellipe 15
-#__len__:
-class MinhaLista:
-    def __init__(self, elementos):
-        self.elementos = elementos
 
-    def __len__(self):
-        return len(self.elementos)
+#__new__:
+class Singleton:
+    _instancia = None
 
-lista = MinhaLista([1, 2, 3, 4])
-print(len(lista))  # Saída: 4
+    def __new__(cls, *args, **kwargs):
+        if not cls._instancia:
+            cls._instancia = super().__new__(cls)
+        return cls._instancia
+
+s1 = Singleton()
+s2 = Singleton()
+print(s1 is s2)  # Saída: True
+
+
+#__del__:
+class Arquivo:
+    def __init__(self, nome):
+        self.nome = nome
+        print(f"Abrindo arquivo {nome}.")
+
+    def __del__(self):
+        print(f"Fechando arquivo {self.nome}.")
+
+arquivo = Arquivo("dados.txt")
+del arquivo  # Saída: Fechando arquivo dados.txt
+
 #__str__:
 class Pessoa:
     def __init__(self, nome, idade):
@@ -56,6 +75,55 @@ class Pessoa:
 
 p = Pessoa("Fellipe", 15)
 print(str(p))  # Saída: Fellipe tem 15 anos.
+
+#__repr__:
+class Pessoa:
+    def __init__(self, nome, idade):
+        self.nome = nome
+        self.idade = idade
+
+    def __repr__(self):
+        return f"Pessoa(nome='{self.nome}', idade={self.idade})"
+
+p = Pessoa("Fellipe", 15)
+print(repr(p))  # Saída: Pessoa(nome='Fellipe', idade=15)
+
+#__format__:
+class Numero:
+    def __init__(self, num):
+        self.num = num
+
+    def __format__(self, format_spec):
+        if format_spec == 'moeda':
+            return f"R$ {self.num:,.2f}"
+        return 'Não encontrado'
+
+n = Numero(100_000_000)
+print(f'{n:moeda}') # Saída: Meu dinheiro: R$ 100,000,000.00
+
+#__bytes__:
+class MeusBytes:
+    def __init__(self, texto):
+        self.texto = texto
+
+    def __bytes__(self):
+        return bytes(self.texto, encoding='utf-8')
+
+l = MeusBytes('Olá')
+print(bytes(l)) # Saída: b'Ol\xc3\xa1'
+
+#__len__:
+class MinhaLista:
+    def __init__(self, elementos):
+        self.elementos = elementos
+
+    def __len__(self):
+        return len(self.elementos)
+
+lista = MinhaLista([1, 2, 3, 4])
+print(len(lista))  # Saída: 4
+
+
 #__add__:
 class Pessoa:
     def __init__(self, nome, idade):
@@ -68,6 +136,7 @@ class Pessoa:
 p1 = Pessoa("Fellipe", 15)
 p2 = Pessoa("Bianca", 14)
 print(p1 + p2)
+
 #__getitem__:
 class MinhaLista:
     def __init__(self, elementos):
@@ -80,6 +149,7 @@ lista = MinhaLista([10, 20, 30])
 print(lista[1])  # Saída: 20
 for n in lista:
     print(n)  # Saída: 10 20 30
+
 #__bool__:
 class Pessoa:
     def __init__(self, nome):
@@ -90,6 +160,7 @@ class Pessoa:
 
 p = Pessoa("")
 print(bool(p))  # Saída: False
+
 #__mul__:
 class Repetidor:
     def __init__(self, texto):
@@ -100,6 +171,7 @@ class Repetidor:
 
 r = Repetidor("Oi! ")
 print(r * 3)  # Saída: Oi! Oi! Oi!
+
 #__delitem__:
 class MinhaLista:
     def __init__(self, elementos):
@@ -111,6 +183,7 @@ class MinhaLista:
 lista = MinhaLista([10, 20, 30])
 del lista[1]
 print(lista.elementos)  # Saída: [10, 30]
+
 #__reversed__:
 class MinhaLista:
     def __init__(self, elementos):
@@ -121,6 +194,7 @@ class MinhaLista:
 
 lista = MinhaLista([1, 2, 3])
 print(list(reversed(lista)))  # Saída: [3, 2, 1]
+
 #__eq__:
 class Pessoa:
     def __init__(self, nome, idade):
@@ -133,6 +207,7 @@ class Pessoa:
 p1 = Pessoa("Fellipe", 15)
 p2 = Pessoa("Bianca", 15)
 print(p1 == p2)  # Saída: True
+
 #__iter__:
 class MinhaLista:
     def __init__(self, elementos):
@@ -144,17 +219,7 @@ class MinhaLista:
 lista = MinhaLista([1, 2, 3])
 for n in lista:
     print(n)  # Saída: 1 2 3
-#__repr__:
-class Pessoa:
-    def __init__(self, nome, idade):
-        self.nome = nome
-        self.idade = idade
 
-    def __repr__(self):
-        return f"Pessoa(nome='{self.nome}', idade={self.idade})"
-
-p = Pessoa("Fellipe", 15)
-print(repr(p))  # Saída: Pessoa(nome='Fellipe', idade=15)
 #__call__:
 class Soma:
     def __call__(self, a, b):
@@ -162,6 +227,7 @@ class Soma:
 
 somar = Soma()
 print(somar(3, 4))  # Saída: 7
+
 #__setitem__:
 class MinhaLista:
     def __init__(self):
@@ -176,6 +242,7 @@ class MinhaLista:
 lista = MinhaLista()
 lista['a'] = 10
 print(lista['a'])  # Saída: 10
+
 #__contains__:
 class MinhaLista:
     def __init__(self, elementos):
@@ -186,6 +253,7 @@ class MinhaLista:
 
 lista = MinhaLista([1, 2, 3])
 print(2 in lista)  # Saída: True
+
 #__hash__:
 class Pessoa:
     def __init__(self, nome, idade):
@@ -198,17 +266,7 @@ class Pessoa:
 p = Pessoa("Fellipe", 15)
 dicionario = {p: "Estudante"}
 print(dicionario)  # Saída: {Pessoa(nome='Fellipe', idade=15): 'Estudante'}
-#__del__:
-class Arquivo:
-    def __init__(self, nome):
-        self.nome = nome
-        print(f"Abrindo arquivo {nome}.")
 
-    def __del__(self):
-        print(f"Fechando arquivo {self.nome}.")
-
-arquivo = Arquivo("dados.txt")
-del arquivo  # Saída: Fechando arquivo dados.txt
 #__pow__:
 class Numero:
     def __init__(self, valor):
@@ -219,6 +277,7 @@ class Numero:
 
 n = Numero(2)
 print(n ** 3)  # Saída: 8
+
 #__sub__:
 class Numero:
     def __init__(self, valor):
@@ -230,6 +289,7 @@ class Numero:
 a = Numero(10)
 b = Numero(3)
 print(a - b)  # Saída: 7
+
 #__lt__, __le__, __gt__, __ge__: <, <=, >, >=.
 class Pessoa:
     def __init__(self, idade):
@@ -241,18 +301,7 @@ class Pessoa:
 p1 = Pessoa(15)
 p2 = Pessoa(20)
 print(p1 < p2)  # Saída: True
-#__new__:
-class Singleton:
-    _instancia = None
 
-    def __new__(cls, *args, **kwargs):
-        if not cls._instancia:
-            cls._instancia = super().__new__(cls)
-        return cls._instancia
-
-s1 = Singleton()
-s2 = Singleton()
-print(s1 is s2)  # Saída: True
 #__getattr__ e __setattr__:
 class Pessoa:
     def __setattr__(self, nome, valor):
