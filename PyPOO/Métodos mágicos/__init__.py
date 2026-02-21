@@ -2,14 +2,17 @@
 __init__: inicializa os atributos.
 __new__: Personalizar a criação de um objeto Chamado antes de __init__. Usado para controle avançado de criação de instâncias.
 __del__: Executa ações ao deletar o objeto.
+
 __str__: transforma a classe em um str do seu desejo.
 __repr__: Representação técnica do objeto.
 __format__: Permite que você passe "instruções" (como .2f) dentro de chaves {} para formatar os atributos internos.
 __bytes__: Transforma o estado do objeto em uma sequência de bytes puramente técnica.
 
+__eq__: faz a igualdade entre duas classes (==)
+__ne__: faz a diferencia entre duas classes (!=)
+__lt__, __le__, __gt__, __ge__: Comparações entre objetos Permite usar <, <=, >, >=.
 
 __len__: facilita o tamanho do objeto (usa-se mais nas listas)
-
 __add__: soma uma classe com a outra
 __getitem__: retorna o elemento da alista interna, ou no for n in
 __setitem__: Permite modificar itens diretamente Usado para definir itens em um objeto, como se fosse um dicionário ou lista.
@@ -17,7 +20,7 @@ __bool__: retorna True ou False
 __mul__: multiplica
 __delitem__: remove a lista ou oq vc quer com o del
 __reversed__: inverte a lista
-__eq__: se colocar classe é igual a outraclasse e returna o valor da sua preferencia
+
 __iter__: Faz a classe iterável
 __call__: Torna o objeto chamável, Permite que um objeto funcione como uma função.
 __contains__: Verificar se um elemento está presente, operador in
@@ -25,7 +28,7 @@ __hash__: Torna o objeto hashable
 
 __pow__: Eleva um objeto a uma potência
 __sub__: Subtração entre objetos
-__lt__, __le__, __gt__, __ge__: Comparações entre objetos Permite usar <, <=, >, >=.
+
 
 __getattr__ e __setattr__: Controle de atributos dinâmicos
 """
@@ -112,6 +115,53 @@ class MeusBytes:
 l = MeusBytes('Olá')
 print(bytes(l)) # Saída: b'Ol\xc3\xa1'
 
+#__eq__:
+class Pessoa:
+    def __init__(self, nome, idade):
+        self.nome = nome
+        self.idade = idade
+
+    def __eq__(self, outra_pessoa):
+        return self.idade == outra_pessoa.idade
+
+p1 = Pessoa("Fellipe", 15)
+p2 = Pessoa("Bianca", 15)
+print(p1 == p2)  # Saída: True
+
+#__ne__:
+class Pessoa:
+    def __init__(self, nome):
+        self.nome = nome
+
+    def __ne__(self, other):
+        if not isinstance(other, Pessoa): return NotImplemented
+        return self.nome != other.nome
+
+p1 = Pessoa('Fellipe')
+p2 = Pessoa('Fellipe')
+print(p1 != p2) # Saída: False
+
+#__lt__, __gt__, __le__, __ge__:
+class Pessoa:
+    def __init__(self, idade):
+        self.idade = idade
+
+    def __lt__(self, other):
+        return self.idade < other.idade
+
+    def __gt__(self, other):
+        return self.idade > other.idade
+
+    def __le__(self, other):
+        return self.idade <= other.idade
+
+    def __ge__(self, other):
+        return self.idade >= other.idade
+
+p1 = Pessoa(idade=21)
+p2 = Pessoa(idade=16)
+print(p1 < p2, p1 > p2, p1 <= p2, p1 >= p2) # Saída: False True False True
+
 #__len__:
 class MinhaLista:
     def __init__(self, elementos):
@@ -194,19 +244,6 @@ class MinhaLista:
 
 lista = MinhaLista([1, 2, 3])
 print(list(reversed(lista)))  # Saída: [3, 2, 1]
-
-#__eq__:
-class Pessoa:
-    def __init__(self, nome, idade):
-        self.nome = nome
-        self.idade = idade
-
-    def __eq__(self, outra_pessoa):
-        return self.idade == outra_pessoa.idade
-
-p1 = Pessoa("Fellipe", 15)
-p2 = Pessoa("Bianca", 15)
-print(p1 == p2)  # Saída: True
 
 #__iter__:
 class MinhaLista:
