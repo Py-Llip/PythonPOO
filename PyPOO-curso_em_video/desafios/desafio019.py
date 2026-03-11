@@ -25,3 +25,4 @@ class Livro:
 l1 = Livro()
 l1.avancar_paginas(5).avancar_paginas(2)
 l1.avancar_paginas(1)
+l1.avancar_paginas(10)

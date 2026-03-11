@@ -1,23 +1,32 @@
 """são métodos que têm dois underscores no início e no final se fala dander coisa, ex dander init
-__init__: inicializa os atributos.
+# Ciclo de vida do objeto.
+__init__: Inicializa os atributos de instância.
 __new__: Personalizar a criação de um objeto Chamado antes de __init__. Usado para controle avançado de criação de instâncias.
 __del__: Executa ações ao deletar o objeto.
 
+# Representação de Objetos
 __str__: transforma a classe em um str do seu desejo.
 __repr__: Representação técnica do objeto.
 __format__: Permite que você passe "instruções" (como .2f) dentro de chaves {} para formatar os atributos internos.
 __bytes__: Transforma o estado do objeto em uma sequência de bytes puramente técnica.
 
+# Comparações Ricas
 __eq__: faz a igualdade entre duas classes (==)
 __ne__: faz a diferencia entre duas classes (!=)
 __lt__, __le__, __gt__, __ge__: Comparações entre objetos Permite usar <, <=, >, >=.
 
+# Aritmética binária
+__add__: serve para somar. Ele tem que estar do lado esquerdo da soma, se não usa-se o método refletido, e se tiver como somar retorne a constante NotImplemented para que o python tente o método refleltido
+__radd__: serve para somar. Ele tem que estar do lado direito da soma e é acionado quando o lado direito não sabe lidar.
+__iadd__: aciona o operador +=, em vez de criar um novo objeto ele tenta modificar o objeto atual.
+__sub__, __mul__, __truediv__, __floordiv__, __mod__, __pow__: subitrai, multiplica, divisão real, divisão inteira, módulo (%), exponenciação
+__rsub__, __rmul__, __rtruediv__, __rfloordiv__, __rmod__, __rpow__: subtrai do lado direito, multiplica do lado direito, divisão real, divisão inteira, módulo (%), exponenciação, tudo do lado direito
+__isub__, __imul__, __itruediv__, __ifloordiv__, __imod__, __ipow__:
+
 __len__: facilita o tamanho do objeto (usa-se mais nas listas)
-__add__: soma uma classe com a outra
 __getitem__: retorna o elemento da alista interna, ou no for n in
 __setitem__: Permite modificar itens diretamente Usado para definir itens em um objeto, como se fosse um dicionário ou lista.
 __bool__: retorna True ou False
-__mul__: multiplica
 __delitem__: remove a lista ou oq vc quer com o del
 __reversed__: inverte a lista
 
@@ -25,10 +34,6 @@ __iter__: Faz a classe iterável
 __call__: Torna o objeto chamável, Permite que um objeto funcione como uma função.
 __contains__: Verificar se um elemento está presente, operador in
 __hash__: Torna o objeto hashable
-
-__pow__: Eleva um objeto a uma potência
-__sub__: Subtração entre objetos
-
 
 __getattr__ e __setattr__: Controle de atributos dinâmicos
 """
@@ -161,6 +166,34 @@ class Pessoa:
 p1 = Pessoa(idade=21)
 p2 = Pessoa(idade=16)
 print(p1 < p2, p1 > p2, p1 <= p2, p1 >= p2) # Saída: False True False True
+
+# __add__, __radd__, __iadd__ (aplica-se a mesma arquitetura a todos os outros):
+class Mat:
+    def __init__(self, num):
+        self.num = num
+
+    def __str__(self):
+        return f'{self.num}'
+
+    def __add__(self, other):
+        if isinstance(other, (Mat, int)):
+            valor = other.num if isinstance(other, Mat) else other
+            return self.num + valor
+        return NotImplemented
+
+    def __radd__(self, other):
+        return self.__add__(other) # reaproveita a lógica do __add__
+
+    def __iadd__(self, other):
+        if isinstance(other, (Mat, int)):
+            self.num += other.num
+        return self
+
+m1 = Mat(10)
+m2 = Mat(2)
+print(12 + m1, m2 + m1, m1 + m2, m1 + 12) # Saída: 22 12 12 22
+m1 += m2
+print(m1) # Saída: 12
 
 #__len__:
 class MinhaLista:
