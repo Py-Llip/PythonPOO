@@ -30,7 +30,7 @@ class Caneta:
         if linhas > 0:
             print('\n' * (linhas-1))
 
-c1 = Caneta('preta')
+c1 = Caneta('branca')
 c1.destampar()
 c1.escrever('Olá, Mundo! ')
 c1.tampar()

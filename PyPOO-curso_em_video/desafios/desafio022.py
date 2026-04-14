@@ -1,85 +1,77 @@
 from rich import print
 from rich.panel import Panel
 class ControleRemoto:
-    def __init__(self):
-        self.canal = 1
-        print(self.canal)
-        self.volume = 1
-        self.ativa = False
-        self.alerta = ''
+    canal_min:int = 1
+    canal_max:int = 5
+    volume_min:int = 1
+    volume_max:int = 5
+    def __init__(self, canal = 1, volume = 2):
+        self.canal_atual:int = canal
+        self.volume_atual:int = volume
+        self.ligado:bool = False
 
-    def ligar(self):
-        if not self.ativa:
-            texto = ':prohibited: [red]A TV está desligada[/]'
+    def liga_desliga(self):
+        self.ligado = not self.ligado
+
+    def canal_mais(self):
+        if self.ligado:
+            if self.canal_atual == ControleRemoto.canal_max:
+                self.canal_atual = ControleRemoto.canal_min
+            else:
+                self.canal_atual += 1
+
+    def canal_menos(self):
+        if self.ligado:
+            if self.canal_atual == ControleRemoto.canal_min:
+                self.canal_atual = ControleRemoto.canal_max
+            else:
+                self.canal_atual -= 1
+
+    def volume_mais(self):
+        if self.ligado:
+            if self.volume_atual != ControleRemoto.volume_max:
+                self.volume_atual += 1
+
+    def volume_menos(self):
+        if self.ligado:
+            if self.volume_atual != ControleRemoto.volume_min:
+                self.volume_atual -= 1
+
+    def mostrar_tv(self):
+        if not self.ligado:
+            conteudo = ':prohibited: [red]A TV está desligada[/]'
         else:
-            texto = f'CANAL  = {self.__set_canal()} \nVOLUME = {self.__set_volume()}'
+            conteudo = f'CANAL  = '
+            for canal in range(ControleRemoto.canal_min, ControleRemoto.canal_max + 1):
+                if canal == self.canal_atual:
+                    conteudo += f'[yellow on yellow] {canal} [/]'
+                else:
+                    conteudo += f' {canal} '
 
-        p = Panel(texto, title='[ TV ]', width=33)
-        print(p)
+            conteudo += f'\nVOLUME = '
+            for volume in range(ControleRemoto.volume_min, ControleRemoto.volume_max+1):
+                if volume <= self.volume_atual:
+                    conteudo += '[black on cyan] [/]'
+                else:
+                    conteudo += '[black on white] [/]'
 
-    def __set_volume(self):
-        volume = ''
-        if self.volume < 0:
-            self.volume = 0
-        elif self.volume > 6:
-            self.volume = 6
-
-        for v in range(6):
-            cor = 'white'
-            if v+1 <= self.volume:
-                cor = 'blue'
-            volume += f'[on {cor}] [/]'
-        return volume
-
-    def __set_canal(self):
-        canal = ''
-        if self.canal > 5:
-            self.canal = 1
-        elif self.canal < 1:
-            self.canal = 5
-        for n in range(5):
-            if n+1 == self.canal:
-                canal += f'[on yellow] {self.canal} [/]'
-                continue
-            canal += f' {n+1} '
-        return canal
-
-    def geren_btn(self):
-        btn = input('< CH1 >  |  - VOL2 + : ')
-        if btn in ['@', '0'] or self.ativa:
-            match btn:
-                case '@':
-                    self.ativa = True if not self.ativa else False
-                    return None
-                case '-':
-                    self.volume -= 1
-                    return None
-                case '+':
-                    self.volume += 1
-                    return None
-                case '<':
-                    self.canal -= 1
-                    return None
-                case '>':
-                    self.canal += 1
-                    return None
-                case '0':
-                    return False
-                case _:
-                    self.alerta = f'O botão {btn} não corresponde a nenhum outro.'
-                    return None
-        self.alerta = f'O botão {btn} não corresponde a nenhum outro.'
-        return None
-
-    def inicializar(self):
-        estado = None
-        while estado is not False:
-            self.ligar()
-            estado = self.geren_btn()
-            print('\n' * 20)
-            print(self.alerta)
-            self.alerta = ''
-
+        tv = Panel(conteudo, title='[ TV ]', width=30)
+        print(tv)
 
 c = ControleRemoto()
-c.inicializar()
+while True:
+    c.mostrar_tv()
+    comando = str(input(f'\n < CH >   - VOL + '))
+    match comando:
+        case '0':
+            break
+        case '@':
+            c.liga_desliga()
+        case '>':
+            c.canal_mais()
+        case '<':
+            c.canal_menos()
+        case '-':
+            c.volume_menos()
+        case '+':
+            c.volume_mais()
