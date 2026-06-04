@@ -21,7 +21,7 @@ class Funcionario(ABC):
 
 
 class FuncionarioHorista(Funcionario):
-    def __init__(self, nome, valor_hora, qtd_horas):
+    def __init__(self, nome, valor_hora = 7.37, qtd_horas = 220):
         super().__init__(nome, None)
         self.valor_hora = valor_hora
         self.qtd_horas = qtd_horas
